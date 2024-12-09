@@ -3,6 +3,9 @@
 from datetime import datetime
 import os
 from validar_data import validar_data  # Importa a função de validar_data.py
+from rotula_config import menu_configuracoes  # Importa o menu de configurações
+
+configuracoes = {}
 
 # Exibe o menu inicial
 os.system('clear')
@@ -29,7 +32,6 @@ def obter_data_fabricacao():
             # Retorna a data válida formatada no padrão DD/MM/AA
             return f"{data_usuario[:2]}/{data_usuario[2:4]}/{data_usuario[4:6]}"
 
-
 # Loop principal
 while True:
     escolha = input("Quer imprimir ou entrar nas configurações? (I)mprimir, (C)onfigurações ou (A)bortar: ").strip().upper()
@@ -37,7 +39,7 @@ while True:
     if escolha == 'A':
         print("Abortando impressão. Saindo...")
         break  # Sai do loop caso o usuário escolha "A"
-    
+
     elif escolha == 'I':
         # Menu de Saborita
         print("\nQual rótulo você quer imprimir?")
@@ -69,8 +71,8 @@ while True:
         break  # Sai do loop caso o usuário tenha feito a escolha da Saborita
 
     elif escolha == 'C':
-        print("Você escolheu configurações. Função a ser implementada...")
-        break  # Sai do loop caso o usuário escolha "C"
-    
+        configuracoes = menu_configuracoes()
+        print("Configurações atualizadas:", configuracoes)
+
     else:
         print("Opção inválida. Por favor, escolha (I), (C) ou (A).")
