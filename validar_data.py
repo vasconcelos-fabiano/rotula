@@ -17,6 +17,11 @@ def validar_data(data):
         print("Data inválida: a data fornecida não existe.")
         return False
 
+    # Verifica restrições específicas de mês e ano
+    if ano < 2024 or (ano == 2024 and mes < 12):
+        print("Data inválida: a data deve ser igual ou posterior a dezembro de 2024.")
+        return False
+
     # Data de hoje e limites
     hoje = datetime.now()
     max_dias_futuro = hoje + timedelta(days=5)
@@ -28,6 +33,22 @@ def validar_data(data):
 
     # Alerta para datas futuras dentro do intervalo permitido
     if data_fabricacao > hoje:
-        print("Aviso: a data fornecida está no futuro. A Saborita não pode ter sido fabricada nessa data ainda.")
+        while True:
+            print("\n######################### A V I S O #########################\n")
+            print("A data fornecida está NO FUTURO!")
+            print("A Saborita não pode ter sido fabricada nessa data ainda!")
+            escolha = input(f"Você errou a data e deseja corrigir? (A)bortar | (E)rrei a data | (C)onfirmar essa data mesmo ({data_fabricacao.strftime('%d/%m/%Y')}): ").strip().upper()
+            
+            if escolha == "E":
+                print("Por favor, insira a data novamente.")
+                return False
+            elif escolha == "C":
+                print("Data confirmada mesmo com o aviso.")
+                break
+            elif escolha == "A":
+                print("Abortando a impressão! Saindo...")
+                return None  # Indica um aborto explícito
+            else:
+                print("Opção inválida. Escolha 'E', 'C' ou 'A'.")
 
-    return True
+    return data_fabricacao.strftime('%d/%m/%y')  # Retorna a data válida

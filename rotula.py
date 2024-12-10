@@ -5,7 +5,19 @@ import os
 from validar_data import validar_data  # Importa a função de validar_data.py
 from rotula_config import menu_configuracoes  # Importa o menu de configurações
 
-configuracoes = {}
+configuracoes = {
+    "velocidade": 10,  # valor padrão para a velocidade
+    "aceleracao": 15,   # valor padrão para aceleração
+    "desaceleracao": 15, # valor padrão para desaceleração
+    "largura_etiqueta": 50,  # valor padrão para a largura da etiqueta
+    "altura_etiqueta": 70,   # valor padrão para a altura da etiqueta
+    "eixo_logo_x": 0,    # valor inicial para eixo logo X
+    "eixo_logo_y": 0,    # valor inicial para eixo logo Y
+    "eixo_saborita_x": 0,  # valor inicial para eixo saborita X
+    "eixo_saborita_y": 0,  # valor inicial para eixo saborita Y
+    "eixo_data_x": 0,    # valor inicial para eixo data X
+    "eixo_data_y": 0     # valor inicial para eixo data Y
+}
 
 # Exibe o menu inicial
 os.system('clear')
@@ -15,23 +27,20 @@ print("="*37)
 
 # Função para obter a data de fabricação
 def obter_data_fabricacao():
-    # Obtém a data de hoje formatada como DDMMAA
     data_hoje = datetime.now().strftime("%d%m%y")
     data_formatada = datetime.now().strftime("%d/%m/%Y")  # Para exibição no prompt
 
     while True:
-        # Mostra a data padrão no prompt
         data_usuario = input(f"Digite a data de fabricação DDMMAA - [ENTER] para hoje ({data_formatada}): ").strip()
-
-        # Se o usuário não digitar nada, usamos a data de hoje
         if not data_usuario:
             data_usuario = data_hoje
 
-        # Valida a data fornecida
-        if validar_data(data_usuario):
-            # Retorna a data válida formatada no padrão DD/MM/AA
-            return f"{data_usuario[:2]}/{data_usuario[2:4]}/{data_usuario[4:6]}"
-
+        data_validada = validar_data(data_usuario)
+        if data_validada is None:  # Aborto explícito
+            exit()  # Encerra o programa ou retorna ao menu principal
+        elif data_validada:  # Data validada e confirmada
+            return data_validada  # Já está formatada na função validar_data
+        
 # Loop principal
 while True:
     escolha = input("Quer imprimir ou entrar nas configurações? (I)mprimir, (C)onfigurações ou (A)bortar: ").strip().upper()
@@ -71,7 +80,7 @@ while True:
         break  # Sai do loop caso o usuário tenha feito a escolha da Saborita
 
     elif escolha == 'C':
-        configuracoes = menu_configuracoes()
+        configuracoes = menu_configuracoes(configuracoes)
         print("Configurações atualizadas:", configuracoes)
 
     else:

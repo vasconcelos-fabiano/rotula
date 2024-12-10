@@ -1,24 +1,7 @@
 import os
 
-# Carregar configurações padrões
-configuracoes = {
-    "velocidade": 2,
-    "aceleracao": 10,
-    "desaceleracao": 2,
-    "largura_etiqueta": 104,
-    "altura_etiqueta": 70,
-    "eixo_logo_x": 417,
-    "eixo_logo_y": 7,
-    "eixo_saborita_x": 5,
-    "eixo_saborita_y": 17,
-    "eixo_data_x": 5,
-    "eixo_data_y": 25,
-}
-
-def menu_configuracoes():
-    """
-    Exibe o menu de configurações e permite ao usuário alterar valores.
-    """
+def menu_configuracoes(configuracoes):
+    configuracoes  # Acesso à variável global configuracoes
     while True:
         os.system('clear')
         print("=" * 37)
@@ -41,20 +24,71 @@ def menu_configuracoes():
             print("Abortando configurações. Retornando...")
             break
         elif escolha == '0':
-            configuracoes["velocidade"] = int(input("Defina a velocidade da impressão (1 a 14) [ENTER] para padrão 2: ") or 2)
-            configuracoes["aceleracao"] = int(input("Defina a aceleração do motor (1 a 30) [ENTER] para padrão 10: ") or 10)
-            configuracoes["desaceleracao"] = int(input("Defina a desaceleração do motor (1 a 30) [ENTER] para padrão 2: ") or 2)
+            try:
+                nova_velocidade = input(f"Defina a velocidade da impressão (1 a 14) [atual: {configuracoes['velocidade']}]: ")
+                configuracoes["velocidade"] = int(nova_velocidade) if nova_velocidade else configuracoes["velocidade"]
+
+                nova_aceleracao = input(f"Defina a aceleração do motor (1 a 30) [atual: {configuracoes['aceleracao']}]: ")
+                configuracoes["aceleracao"] = int(nova_aceleracao) if nova_aceleracao else configuracoes["aceleracao"]
+
+                nova_desaceleracao = input(f"Defina a desaceleração do motor (1 a 30) [atual: {configuracoes['desaceleracao']}]: ")
+                configuracoes["desaceleracao"] = int(nova_desaceleracao) if nova_desaceleracao else configuracoes["desaceleracao"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
         elif escolha == '1':
-            largura = input("Defina a largura da etiqueta em mm (ENTER para 104): ")
-            altura = input("Defina a altura da etiqueta em mm (ENTER para 70): ")
-            configuracoes["largura_etiqueta"] = int(largura) if largura else configuracoes["largura_etiqueta"]
-            configuracoes["altura_etiqueta"] = int(altura) if altura else configuracoes["altura_etiqueta"]
-        elif escolha in ['2', '3', '4', '5', '6', '7']:
-            eixo = "logo" if opcao in ['4', '5'] else "saborita" if opcao in ['6', '7'] else "data"
-            eixo_campo = f"eixo_{eixo}_x" if opcao in ['4', '6', '8'] else f"eixo_{eixo}_y"
-            valor = input(f"Defina o valor do {eixo_campo.replace('_', ' ')} (ENTER para {configuracoes[eixo_campo]}): ")
-            configuracoes[eixo_campo] = int(valor) if valor else configuracoes[eixo_campo]
+            try:
+                nova_largura = input(f"Defina a largura da etiqueta em mm [atual: {configuracoes['largura_etiqueta']}]: ")
+                configuracoes["largura_etiqueta"] = int(nova_largura) if nova_largura else configuracoes["largura_etiqueta"]
+
+                nova_altura = input(f"Defina a altura da etiqueta em mm [atual: {configuracoes['altura_etiqueta']}]: ")
+                configuracoes["altura_etiqueta"] = int(nova_altura) if nova_altura else configuracoes["altura_etiqueta"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '2':
+            try:
+                nova_posicao_x_logo = input(f"Defina o eixo X da logo [atual: {configuracoes['eixo_logo_x']}]: ")
+                configuracoes["eixo_logo_x"] = int(nova_posicao_x_logo) if nova_posicao_x_logo else configuracoes["eixo_logo_x"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '3':
+            try:
+                nova_posicao_y_logo = input(f"Defina o eixo Y da logo [atual: {configuracoes['eixo_logo_y']}]: ")
+                configuracoes["eixo_logo_y"] = int(nova_posicao_y_logo) if nova_posicao_y_logo else configuracoes["eixo_logo_y"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '4':
+            try:
+                nova_posicao_x_saborita = input(f"Defina o eixo X da saborita_info [atual: {configuracoes['eixo_saborita_x']}]: ")
+                configuracoes["eixo_saborita_x"] = int(nova_posicao_x_saborita) if nova_posicao_x_saborita else configuracoes["eixo_saborita_x"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '5':
+            try:
+                nova_posicao_y_saborita = input(f"Defina o eixo Y da saborita_info [atual: {configuracoes['eixo_saborita_y']}]: ")
+                configuracoes["eixo_saborita_y"] = int(nova_posicao_y_saborita) if nova_posicao_y_saborita else configuracoes["eixo_saborita_y"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '6':
+            try:
+                nova_posicao_x_data = input(f"Defina o eixo X da data de fabricação [atual: {configuracoes['eixo_data_x']}]: ")
+                configuracoes["eixo_data_x"] = int(nova_posicao_x_data) if nova_posicao_x_data else configuracoes["eixo_data_x"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
+        elif escolha == '7':
+            try:
+                nova_posicao_y_data = input(f"Defina o eixo Y da data de fabricação [atual: {configuracoes['eixo_data_y']}]: ")
+                configuracoes["eixo_data_y"] = int(nova_posicao_y_data) if nova_posicao_y_data else configuracoes["eixo_data_y"]
+
+            except ValueError:
+                print("Entrada inválida. Use apenas números.")
         else:
-            print("Opção inválida. Tente novamente.")
+            print("Opção inválida. Escolha entre 0, 1, 2, 3, 4, 5, 6, 7 ou A.")
 
     return configuracoes
