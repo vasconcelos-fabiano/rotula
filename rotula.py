@@ -81,6 +81,7 @@ while True:
 
     elif escolha == 'C':
         configuracoes = menu_configuracoes(configuracoes)
+        salvar_configuracoes(configuracoes)
         print("Configurações atualizadas:", configuracoes)
 
     else:

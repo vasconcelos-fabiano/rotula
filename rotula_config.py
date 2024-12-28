@@ -92,3 +92,44 @@ def menu_configuracoes(configuracoes):
             print("Opção inválida. Escolha entre 0, 1, 2, 3, 4, 5, 6, 7 ou A.")
 
     return configuracoes
+
+def salvar_configuracoes(configuracoes, arquivo="rotula.conf"):
+    conteudo = [
+        "# Configurações do cabeçalho (não devem mudar frequentemente)",
+        "HEADER_LINE1=^XA",
+        "HEADER_LINE2=^PW832",
+        "HEADER_LINE3=^LL561",
+        "HEADER_LINE4=^MTT",
+        "HEADER_LINE6=~SD15",
+        "HEADER_LINE7=^PR2,10,2",
+        "HEADER_LINE8=^CI28",
+        "",
+        "# Configurações do rodapé (não devem mudar frequentemente)",
+        "FOOTER_LINE1=^FO5,130",
+        "FOOTER_LINE2=^A0,20,25",
+        "FOOTER_LINE3=^FD{DATA}^FS",
+        "FOOTER_LINE4=^XZ",
+        "",
+        "# Coordenadas padrões para as figuras",
+        f"FO_LOGO_X={configuracoes['eixo_logo_x']}",
+        f"FO_LOGO_Y={configuracoes['eixo_logo_y']}",
+        f"FO_SABORITA_X={configuracoes['eixo_saborita_x']}",
+        f"FO_SABORITA_Y={configuracoes['eixo_saborita_y']}",
+        f"FO_DATA_X={configuracoes['eixo_data_x']}",
+        f"FO_DATA_Y={configuracoes['eixo_data_y']}",
+        "",
+        "# Velocidade e aceleração",
+        f"VELOCIDADE={configuracoes['velocidade']}",
+        f"ACELERACAO={configuracoes['aceleracao']}",
+        f"DESACELERACAO={configuracoes['desaceleracao']}",
+        "",
+        "# Tamanho da etiqueta em mm",
+        f"LARGURA_ETIQUETA={configuracoes['largura_etiqueta']}",
+        f"ALTURA_ETIQUETA={configuracoes['altura_etiqueta']}",
+        "",
+        "# Caminho para imagens (figuras)",
+        'IMAGE_PATH="/home/madame/install/rotula/"'
+    ]
+
+    with open(arquivo, "w") as f:
+        f.write("\n".join(conteudo))
